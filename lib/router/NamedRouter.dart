@@ -7,7 +7,6 @@ import 'package:hgj_flutter/pages/SplashPage.dart';
  */
 class NamedRouter {
   static Map<String, WidgetBuilder> routes;
-  //初始化app
   static Widget initApp() {
     return MaterialApp(
       routes: NamedRouter.initRoutes(),

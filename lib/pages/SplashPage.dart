@@ -5,9 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashPage extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() {
-    return new SplashPageState();
-  }
+  State<StatefulWidget> createState() => new SplashPageState();
 }
 
 class SplashPageState extends State<SplashPage> {
@@ -65,11 +63,15 @@ class SplashPageState extends State<SplashPage> {
     );
   }
 
-//  @override
-//  void initState() {
-//    super.initState();
-//    _getFristPage();
-//  }
+  @override
+  void initState() {
+    super.initState();
+    _getFristPage().then((bool b) {
+      if (b != null && b) {
+        Navigator.of(context).pushReplacementNamed('/login');
+      }
+    });
+  }
 
   List<String> _guildeList = [
     Utils.getImgPath('splash'),
@@ -84,21 +86,9 @@ class SplashPageState extends State<SplashPage> {
     Navigator.of(context).pushReplacementNamed('/login');
   }
 
-  _getFristPage() async {
+  Future<bool> _getFristPage() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    var value = preferences.getBool("isFinish");
-    print("当前是否已加载过 = $value");
-    return value;
-  }
-
-  Widget _goWitch() {
-    if (_getFristPage()) {
-      return new Scaffold(
-        body: new LoginPage(),
-      );
-    } else {
-      return _createPageController();
-    }
+    return await preferences.getBool("isFinish");
   }
 
   @override

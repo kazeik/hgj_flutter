@@ -1,5 +1,8 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:hgj_flutter/router/UriRouter.dart';
 import 'package:hgj_flutter/utils/Utils.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -7,11 +10,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  String _email = "";
-  String _pwd = "";
-
-  final mailController = TextEditingController();
-  final passController = TextEditingController();
+  final mailController = TextEditingController(text: "123@123.com");
+  final passController = TextEditingController(text: "Vonyooyunwei123456");
 
   /**
    * 构建邮箱
@@ -21,18 +21,16 @@ class _LoginPageState extends State<LoginPage> {
     return new Padding(
       padding: const EdgeInsets.only(left: 40.0, right: 40.0),
       child: Theme(
-        data: new ThemeData(primaryColor: Colors.blue,hintColor: Colors.white),
+        data: new ThemeData(primaryColor: Colors.blue, hintColor: Colors.white),
         child: new TextField(
-          onChanged: (str) {
-            _email = str;
-          },
+          onChanged: (str) {},
           style: TextStyle(fontSize: 16.0, color: Colors.white),
           controller: mailController,
           decoration: new InputDecoration(
               hintText: "请输入邮箱",
               hintStyle: TextStyle(color: Colors.white, fontSize: 16.0),
-              border:
-              OutlineInputBorder(borderRadius: BorderRadius.circular(13.0))),
+              border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(13.0))),
           maxLines: 1,
           keyboardType: TextInputType.emailAddress,
           onSubmitted: (text) {
@@ -56,9 +54,7 @@ class _LoginPageState extends State<LoginPage> {
           data:
               new ThemeData(primaryColor: Colors.blue, hintColor: Colors.white),
           child: new TextField(
-            onChanged: (str) {
-              _pwd = str;
-            },
+            onChanged: (str) {},
             controller: passController,
             //是否是密码
             obscureText: true,
@@ -77,21 +73,44 @@ class _LoginPageState extends State<LoginPage> {
         ));
   }
 
+  _login(String email, String pwd) async {
+    Dio dio = new Dio();
+    dio.options.baseUrl = "http://jfgj.wooyou.org";
+    dio.options.receiveTimeout = 15 * 1000;
+    dio.options.connectTimeout = 15 * 1000;
+
+    dio.post(UriRouter.uriRouter['login'],
+        queryParameters: {"email": email, "pwd": pwd}).then((d) {
+      print(d);
+      var session = d.headers['set-cookie'];
+      for (var item in session) {
+        if (item.startsWith("JFGJ_SID=")) {
+          var cookie = item.substring(9, item.split(";")[0].length);
+          _saveStringData("cookie", cookie);
+        }
+      }
+    });
+  }
+
+  _saveStringData(String key, String value) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    preferences.setString(key, value);
+  }
+
   /**
    * 登录按钮
    */
   Widget _buildLoginWidget() {
     return new Padding(
-      padding: new EdgeInsets.only(left:40.0,top: 20.0,right: 40.0,bottom: 10.0),
+      padding:
+          new EdgeInsets.only(left: 40.0, top: 20.0, right: 40.0, bottom: 10.0),
       child: new MaterialButton(
-        onPressed: (_email.isEmpty || _pwd.length < 8) ? null : () {
-          print(
-              "用户名= $_email 密码= $_pwd mailControler =${mailController.text}  passController = ${passController.text}");
-        },
-//        onPressed: () {
-//          print(
-//              "用户名= $_email 密码= $_pwd mailControler =${mailController.text}  passController = ${passController.text}");
-//        },
+        onPressed:
+            (mailController.text.isEmpty || passController.text.length < 8)
+                ? null
+                : () {
+                    _login(mailController.text, passController.text);
+                  },
         color: Colors.amberAccent,
         textColor: Colors.white,
         minWidth: 400,
@@ -114,7 +133,7 @@ class _LoginPageState extends State<LoginPage> {
 
   Widget _buildRegisterAndForgetPass() {
     return new Padding(
-        padding: new EdgeInsets.only(left: 40,  right: 40),
+        padding: new EdgeInsets.only(left: 40, right: 40),
         child: new Row(
           //子组件的排列方式为主轴两端对齐
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
