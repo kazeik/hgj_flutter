@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:hgj_flutter/beans/UserInfo.dart';
 
 class Utils {
+  static UserInfo mainInfo;
+
   static String getImgPath(String name, {String format: 'png'}) {
     return 'assets/images/$name.$format';
   }

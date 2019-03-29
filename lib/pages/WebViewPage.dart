@@ -85,7 +85,7 @@ class WebViewPageState extends State<WebViewPage>{
     // WebviewScaffold是插件提供的组件，用于在页面上显示一个WebView并加载URL
     return new WebviewScaffold(
       key: scaffoldKey,
-      url:news_url, // 登录的URL
+      url:news_url,
       appBar: new AppBar(
         title: new Row(
           mainAxisAlignment: MainAxisAlignment.center,

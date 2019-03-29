@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hgj_flutter/pages/AboutPage.dart';
 import 'package:hgj_flutter/pages/HomePage.dart';
 import 'package:hgj_flutter/pages/LoginPage.dart';
 import 'package:hgj_flutter/pages/SplashPage.dart';
@@ -8,6 +9,7 @@ import 'package:hgj_flutter/pages/SplashPage.dart';
  */
 class NamedRouter {
   static Map<String, WidgetBuilder> routes;
+
   static Widget initApp() {
     return MaterialApp(
       routes: NamedRouter.initRoutes(),
@@ -19,7 +21,8 @@ class NamedRouter {
     routes = {
       '/': (context) => SplashPage(),
       '/login': (context) => LoginPage(),
-      '/home':(context) => HomePage()
+      '/home': (context) => HomePage(),
+      '/about': (context) => AboutPage(),
     };
     return routes;
   }

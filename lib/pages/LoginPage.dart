@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:hgj_flutter/beans/UserInfo.dart';
 import 'package:hgj_flutter/net/HttpNet.dart';
 import 'package:hgj_flutter/router/UriRouter.dart';
 import 'package:hgj_flutter/utils/Utils.dart';
@@ -77,15 +80,36 @@ class _LoginPageState extends State<LoginPage> {
   _login(String email, String pwd) async {
     HttpNet.instance.dio.post(UriRouter.uriRouter['login'],
         queryParameters: {"email": email, "pwd": pwd}).then((d) {
-      print(d);
-      var session = d.headers['set-cookie'];
-      for (var item in session) {
-        if (item.startsWith("JFGJ_SID=")) {
+      var json = jsonDecode(d.toString());
+      List<dynamic> error = json['error'];
+      if (error == null || error.isEmpty) {
+        var jsondata = json['data'];
+        UserInfo info = new UserInfo();
+        info.id = jsondata['id'];
+        info.nickName = jsondata['nickname'];
+        info.name = jsondata['name'];
+        info.email = jsondata['email'];
+        info.mobile = jsondata['mobile'];
+        info.createTime = jsondata['createTime'];
+        info.lastLoginTime = jsondata['lastLoginTime'];
+        info.status = jsondata['status'];
+        info.needpush = jsondata['needpush'];
+        info.hasctrlpwd = jsondata['hasctrlpwd'];
+        info.hasctrlgesture = jsondata['hasctrlgesture'];
+        info.avatar = jsondata['avatar'];
+        info.roomids = jsondata['roomids'];
+
+        Utils.mainInfo = info;
+
+        var session = d.headers['set-cookie'];
+        for (var item in session) {
+          if (item.startsWith("JFGJ_SID=")) {
 //          var cookie = item.substring(0, item.split(";")[0].length);
-          var cookie = item.split(";")[0];
-          print("cookie = $cookie");
-          _saveStringData("cookie", cookie);
-          Navigator.of(context).pushReplacementNamed('/home');
+            var cookie = item.split(";")[0];
+            print("cookie = $cookie");
+            _saveStringData("cookie", cookie);
+            Navigator.of(context).pushReplacementNamed('/home');
+          }
         }
       }
     });
