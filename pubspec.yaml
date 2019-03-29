@@ -26,6 +26,7 @@ dependencies:
   shared_preferences: ^0.4.2
   dio: ^2.1.0
   fluttertoast: ^3.0.1
+  flutter_webview_plugin: ^0.3.3
 
 dev_dependencies:
   flutter_test:

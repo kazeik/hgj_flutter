@@ -1,11 +1,11 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hgj_flutter/beans/ErrorMsgBean.dart';
 import 'package:hgj_flutter/beans/ProdTypeInfoBean.dart';
 import 'package:hgj_flutter/beans/ProductDataBean.dart';
 import 'package:hgj_flutter/net/HttpNet.dart';
+import 'package:hgj_flutter/pages/WebViewPage.dart';
 import 'package:hgj_flutter/router/UriRouter.dart';
 import 'package:hgj_flutter/utils/Utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -38,7 +38,7 @@ class ServicePageState extends State<ServicePage> {
         msgBean.message = temperror[0]['message'];
         msgBean.field = temperror[0]['field'];
 
-        _showToast(msgBean.message);
+        Utils.showToast(msgBean.message);
         if ((msgBean.field == "403" && msgBean.message == "please reLogin") ||
             msgBean.field == "401")
           Navigator.of(context).pushReplacementNamed('/login');
@@ -88,36 +88,46 @@ class ServicePageState extends State<ServicePage> {
     });
   }
 
-  _showToast(String msg) {
-    Fluttertoast.showToast(
-        msg: msg,
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.CENTER,
-        timeInSecForIos: 1,
-        backgroundColor: Colors.grey,
-        textColor: Colors.white,
-        fontSize: 16.0);
+  /**
+   * 九宫格点击事件
+   */
+  _gridOnTap(ProductDataBean bean) {
+    Navigator.push(
+        context,
+        new MaterialPageRoute(
+            builder: (context) =>
+                new WebViewPage(bean.prodshowpage, bean.prodname)));
   }
 
   Widget _gridItem(ProductDataBean bean) {
-    return Column(
-      children: <Widget>[
-        Image(
-          width: 45,
-          height: 45,
-          image: new NetworkImage("${UriRouter.baseUrl}${bean.appicon}"),
-            fit: BoxFit.cover,
-        ),
-        Text(
-          bean.prodname,
-          textAlign: TextAlign.center,
-        )
-      ],
+    return Container(
+      margin: EdgeInsets.all(3),
+      child: GestureDetector(
+          onTap: () {
+            _gridOnTap(bean);
+          },
+          child: Column(
+            children: <Widget>[
+              Image(
+                width: 45,
+                height: 45,
+                image: new NetworkImage("${UriRouter.baseUrl}${bean.appicon}"),
+                fit: BoxFit.cover,
+              ),
+              Text(
+                bean.prodname,
+                textAlign: TextAlign.center,
+              )
+            ],
+          )),
     );
   }
 
+  /**
+   * 构建listView的子列
+   */
   Widget _buildListItem(ProdTypeInfoBean bean) {
-    return new Column(
+    return Column(
       children: <Widget>[
         Container(
           width: double.infinity,
@@ -130,15 +140,12 @@ class ServicePageState extends State<ServicePage> {
           ),
         ),
         Container(
-          width: double.infinity,
-          height: 200,
           child: GridView.count(
               primary: false,
               physics: NeverScrollableScrollPhysics(),
-              //增加
               shrinkWrap: true,
-              //增加
               crossAxisCount: 3,
+              childAspectRatio: 5 / 3,
               children: bean.productDataList.map((ProductDataBean bean) {
                 return _gridItem(bean);
               }).toList()),
@@ -149,8 +156,8 @@ class ServicePageState extends State<ServicePage> {
 
   @override
   Widget build(BuildContext context) {
-    return  MaterialApp(
-      theme:  ThemeData(
+    return MaterialApp(
+      theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
       debugShowCheckedModeBanner: false,
@@ -167,11 +174,10 @@ class ServicePageState extends State<ServicePage> {
                   child: Container(
                     color: const Color(0xFFFAEBD7),
                     padding: EdgeInsets.all(5.0),
-                    child:  Column(
+                    child: Column(
                       children: <Widget>[
                         Image(
-                          image:
-                               AssetImage(Utils.getImgPath("service_basic")),
+                          image: AssetImage(Utils.getImgPath("service_basic")),
                           width: 30,
                           height: 30,
                         ),
@@ -188,11 +194,10 @@ class ServicePageState extends State<ServicePage> {
                   child: Container(
                     color: const Color(0xFFF0F8FF),
                     padding: EdgeInsets.all(5.0),
-                    child:  Column(
+                    child: Column(
                       children: <Widget>[
                         Image(
-                          image:
-                               AssetImage(Utils.getImgPath("service_glod")),
+                          image: AssetImage(Utils.getImgPath("service_glod")),
                           width: 30,
                           height: 30,
                         ),
@@ -206,15 +211,14 @@ class ServicePageState extends State<ServicePage> {
                   child: Container(
                     color: const Color(0xFF7FFFD4),
                     padding: EdgeInsets.all(5.0),
-                    child:  Column(
+                    child: Column(
                       children: <Widget>[
                         Image(
                           width: 30,
                           height: 30,
-                          image:
-                               AssetImage(Utils.getImgPath('service_diman')),
+                          image: AssetImage(Utils.getImgPath('service_diman')),
                         ),
-                         Text("钻石服务\n专人服务")
+                        Text("钻石服务\n专人服务")
                       ],
                     ),
                   ),
@@ -227,7 +231,7 @@ class ServicePageState extends State<ServicePage> {
                 shrinkWrap: true,
                 itemCount:
                     (allData == null || allData.isEmpty) ? 0 : allData.length,
-                itemBuilder: _buildListItemUi)
+                itemBuilder: _buildListItemUi),
           ],
         ),
       ),
