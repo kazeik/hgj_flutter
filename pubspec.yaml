@@ -25,6 +25,7 @@ dependencies:
   cupertino_icons: ^0.1.2
   shared_preferences: ^0.4.2
   dio: ^2.1.0
+  fluttertoast: ^3.0.1
 
 dev_dependencies:
   flutter_test:
@@ -50,6 +51,18 @@ flutter:
     - assets/images/splash3.jpg
     - assets/images/login_bg.png
     - assets/images/login_top.png
+    - assets/images/host.png
+    - assets/images/host_sel.png
+    - assets/images/monitor.png
+    - assets/images/monitor_sel.png
+    - assets/images/my.png
+    - assets/images/my_sel.png
+    - assets/images/service.png
+    - assets/images/service_sel.png
+    - assets/images/top_img.png
+    - assets/images/service_basic.png
+    - assets/images/service_glod.png
+    - assets/images/service_diman.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.

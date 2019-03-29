@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hgj_flutter/pages/HomePage.dart';
 import 'package:hgj_flutter/pages/LoginPage.dart';
 import 'package:hgj_flutter/pages/SplashPage.dart';
 
@@ -17,7 +18,8 @@ class NamedRouter {
   static initRoutes() {
     routes = {
       '/': (context) => SplashPage(),
-      '/login': (context) => LoginPage()
+      '/login': (context) => LoginPage(),
+      '/home':(context) => HomePage()
     };
     return routes;
   }

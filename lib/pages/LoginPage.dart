@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:hgj_flutter/net/HttpNet.dart';
 import 'package:hgj_flutter/router/UriRouter.dart';
 import 'package:hgj_flutter/utils/Utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -74,19 +75,17 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   _login(String email, String pwd) async {
-    Dio dio = new Dio();
-    dio.options.baseUrl = "http://jfgj.wooyou.org";
-    dio.options.receiveTimeout = 15 * 1000;
-    dio.options.connectTimeout = 15 * 1000;
-
-    dio.post(UriRouter.uriRouter['login'],
+    HttpNet.instance.dio.post(UriRouter.uriRouter['login'],
         queryParameters: {"email": email, "pwd": pwd}).then((d) {
       print(d);
       var session = d.headers['set-cookie'];
       for (var item in session) {
         if (item.startsWith("JFGJ_SID=")) {
-          var cookie = item.substring(9, item.split(";")[0].length);
+//          var cookie = item.substring(0, item.split(";")[0].length);
+          var cookie = item.split(";")[0];
+          print("cookie = $cookie");
           _saveStringData("cookie", cookie);
+          Navigator.of(context).pushReplacementNamed('/home');
         }
       }
     });

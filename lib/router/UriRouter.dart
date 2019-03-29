@@ -3,12 +3,13 @@
  */
 class UriRouter {
   static Map<String, String> uriRouter;
-
+  static String baseUrl = "http://jfgj.wooyou.org/JFGJ";
   UriRouter();
 
   initUriRouter() {
     uriRouter = {
-      "login": "/JFGJ/signin",
+      "login": "/signin",
+      "producttypesinfo":"/api/productTypeService/producttypesinfo"
     };
   }
 }
