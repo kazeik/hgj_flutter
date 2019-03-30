@@ -4,8 +4,10 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:hgj_flutter/beans/UserInfo.dart';
 import 'package:hgj_flutter/net/HttpNet.dart';
+import 'package:hgj_flutter/pages/HomePage.dart';
 import 'package:hgj_flutter/router/UriRouter.dart';
 import 'package:hgj_flutter/utils/Utils.dart';
+import 'package:hgj_flutter/views/LoadingDialog.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatefulWidget {
@@ -16,6 +18,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final mailController = TextEditingController(text: "123@123.com");
   final passController = TextEditingController(text: "Vonyooyunwei123456");
+  bool loading = false;
 
   /**
    * 构建邮箱
@@ -78,6 +81,7 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   _login(String email, String pwd) async {
+    _loading();
     HttpNet.instance.dio.post(UriRouter.uriRouter['login'],
         queryParameters: {"email": email, "pwd": pwd}).then((d) {
       var json = jsonDecode(d.toString());
@@ -104,11 +108,11 @@ class _LoginPageState extends State<LoginPage> {
         var session = d.headers['set-cookie'];
         for (var item in session) {
           if (item.startsWith("JFGJ_SID=")) {
-//          var cookie = item.substring(0, item.split(";")[0].length);
             var cookie = item.split(";")[0];
             print("cookie = $cookie");
             _saveStringData("cookie", cookie);
-            Navigator.of(context).pushReplacementNamed('/home');
+            Navigator.pop(context);
+            Navigator.of(context).pushNamed('/home');
           }
         }
       }
@@ -204,5 +208,17 @@ class _LoginPageState extends State<LoginPage> {
         ],
       ),
     );
+  }
+
+  Widget _loading() {
+    showDialog<Null>(
+        context: context, //BuildContext对象
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return new LoadingDialog(
+            //调用对话框
+            text: '数据加载中...',
+          );
+        });
   }
 }

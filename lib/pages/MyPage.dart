@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hgj_flutter/pages/AboutPage.dart';
-import 'package:hgj_flutter/router/NamedRouter.dart';
 import 'package:hgj_flutter/router/UriRouter.dart';
 import 'package:hgj_flutter/utils/Utils.dart';
+import 'package:hgj_flutter/views/TextIconCell.dart';
 
 class MyPage extends StatefulWidget {
   State<StatefulWidget> createState() => MyPageState();
@@ -31,7 +31,7 @@ class MyPageState extends State<MyPage> {
                   width: 55,
                   height: 55,
                   image: iconPath == null || iconPath == ""
-                      ? AssetImage(Utils.getImgPath("host"))
+                      ? AssetImage(Utils.getImgPath("logo"))
                       : NetworkImage(
                           "${UriRouter.baseUrl}${Utils.mainInfo.avatar}"),
                 ),
@@ -67,41 +67,15 @@ class MyPageState extends State<MyPage> {
     } else if (label == lables[2]) {
       print("设置被点击");
     } else if (label == lables[3]) {
-//      Navigator.push(
-//          context, new MaterialPageRoute(builder: (context) => AboutPage()));
-    Navigator.pushNamed(context, "/about");
+      Navigator.push(
+          context, new MaterialPageRoute(builder: (context) => AboutPage()));
     } else if (label == lables[4]) {
       print("个人中心被点击");
     } else if (label == lables[5]) {
       print("头像被点击");
+    } else if (label == "test") {
+      print("test onClick");
     }
-  }
-
-  _buildItemCell(String text, double top) {
-    return GestureDetector(
-      onTap: () {
-        _onClickEvent(text);
-      },
-      child: Container(
-        color: Colors.white,
-        margin: EdgeInsets.only(top: top, bottom: 1),
-        padding: EdgeInsets.all(15),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Text(
-              text,
-              style: TextStyle(fontSize: 16),
-            ),
-            Image(
-              width: 20,
-              height: 20,
-              image: AssetImage(Utils.getImgPath("host")),
-            )
-          ],
-        ),
-      ),
-    );
   }
 
   @override
@@ -118,10 +92,38 @@ class MyPageState extends State<MyPage> {
           body: Column(
             children: <Widget>[
               _buildUserInfo(),
-              _buildItemCell(lables[0], 5),
-              _buildItemCell(lables[1], 1),
-              _buildItemCell(lables[2], 5),
-              _buildItemCell(lables[3], 1),
+              TextIconCell(
+                leftText: lables[0],
+                margin: EdgeInsets.only(top: 5),
+                image: AssetImage(Utils.getImgPath("arr_right")),
+                onClick: () {
+                  _onClickEvent(lables[0]);
+                },
+              ),
+              TextIconCell(
+                leftText: lables[1],
+                margin: EdgeInsets.only(top: 1),
+                image: AssetImage(Utils.getImgPath("arr_right")),
+                onClick: () {
+                  _onClickEvent(lables[1]);
+                },
+              ),
+              TextIconCell(
+                leftText: lables[2],
+                margin: EdgeInsets.only(top: 5),
+                image: AssetImage(Utils.getImgPath("arr_right")),
+                onClick: () {
+                  _onClickEvent(lables[2]);
+                },
+              ),
+              TextIconCell(
+                leftText: lables[3],
+                margin: EdgeInsets.only(top: 1),
+                image: AssetImage(Utils.getImgPath("arr_right")),
+                onClick: () {
+                  _onClickEvent(lables[3]);
+                },
+              ),
             ],
           )),
     );

@@ -1,12 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:hgj_flutter/utils/Utils.dart';
+import 'package:hgj_flutter/views/MessageDialog.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+_callPhone() {
+  String url = "tel:073182188888";
+  launch(url);
+}
 
 class AboutPage extends StatelessWidget {
   _onClickEvent(String text) {
     if (text == "系统版本") {
       print("系统版本被响应了");
     } else if (text == "客服电话") {
-      print("客服电话被响应了");
+//      MessageDialog(
+//        title: "提示",
+//        message: "是否需要拨打电话0731-82188888",
+//        onCloseEvent: null,
+//        negativeText: "取消",
+//        positiveText: "确定",
+//
+//      );
+      _callPhone();
     }
   }
 
@@ -59,11 +74,26 @@ class AboutPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Expanded(
-              flex: 1,
-              child: Container(
-                  child:
-                      Image(image: AssetImage(Utils.getImgPath("login_top")))),
-            ),
+                flex: 1,
+                child: Container(
+                  margin: EdgeInsets.only(top: 30),
+                  child: Column(
+                    children: <Widget>[
+                      Image(
+                        image: AssetImage(Utils.getImgPath("abouttop")),
+                        width: 100,
+                        height: 100,
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(top: 10),
+                        child: Text(
+                          "华管家",
+                          style: TextStyle(fontSize: 16),
+                        ),
+                      )
+                    ],
+                  ),
+                )),
             Expanded(
               flex: 1,
               child: Column(
