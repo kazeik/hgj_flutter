@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hgj_flutter/utils/Utils.dart';
-import 'package:hgj_flutter/views/MessageDialog.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 _callPhone() {
@@ -53,72 +52,59 @@ class AboutPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: new ThemeData(
-          primarySwatch: Colors.blue, backgroundColor: Colors.black12),
-      debugShowCheckedModeBanner: false,
-      home: new Scaffold(
-        appBar: AppBar(
-          leading: Builder(builder: (BuildContext context) {
-            return IconButton(
-              icon: Icon(Icons.arrow_back),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-            );
-          }),
-          centerTitle: true,
-          title: Text("关于我们"),
-        ),
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Expanded(
-                flex: 1,
-                child: Container(
-                  margin: EdgeInsets.only(top: 30),
-                  child: Column(
-                    children: <Widget>[
-                      Image(
-                        image: AssetImage(Utils.getImgPath("abouttop")),
-                        width: 100,
-                        height: 100,
-                      ),
-                      Container(
-                        margin: EdgeInsets.only(top: 10),
-                        child: Text(
-                          "华管家",
-                          style: TextStyle(fontSize: 16),
-                        ),
-                      )
-                    ],
-                  ),
-                )),
-            Expanded(
-              flex: 1,
-              child: Column(
-                children: <Widget>[
-                  _buildItemCell("系统版本", "v1.0", 0),
-                  _buildItemCell(
-                    "客服电话",
-                    "0731-82188888",
-                    1,
-                  ),
-                ],
-              ),
-            ),
-            Expanded(
+    return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text("关于我们"),
+      ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Expanded(
               flex: 1,
               child: Container(
-                alignment: Alignment.center,
-                child: Text(
-                  "江西物优网络有限公司\nCopyright c 2016-2017 wooyoo\nAll Rights Reserved.",
-                  textAlign: TextAlign.center,
+                margin: EdgeInsets.only(top: 30),
+                child: Column(
+                  children: <Widget>[
+                    Image(
+                      image: AssetImage(Utils.getImgPath("abouttop")),
+                      width: 100,
+                      height: 100,
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(top: 10),
+                      child: Text(
+                        "华管家",
+                        style: TextStyle(fontSize: 16),
+                      ),
+                    )
+                  ],
                 ),
+              )),
+          Expanded(
+            flex: 1,
+            child: Column(
+              children: <Widget>[
+                _buildItemCell("系统版本", "v1.0", 0),
+                _buildItemCell(
+                  "客服电话",
+                  "0731-82188888",
+                  1,
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+            flex: 1,
+            child: Container(
+              alignment: Alignment.center,
+              child: Text(
+                "江西物优网络有限公司\nCopyright c 2016-2017 wooyoo\nAll Rights Reserved.",
+                textAlign: TextAlign.center,
               ),
-            )
-          ],
-        ),
+            ),
+          )
+        ],
       ),
     );
   }

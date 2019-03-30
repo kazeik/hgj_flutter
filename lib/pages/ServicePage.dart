@@ -133,107 +133,100 @@ class ServicePageState extends State<ServicePage> {
           width: double.infinity,
           color: Colors.black12,
           padding: EdgeInsets.only(top: 3, bottom: 3),
-          child: new Text(
+          child: Text(
             bean.prodtypename,
             textAlign: TextAlign.center,
             style: TextStyle(fontSize: 16.0),
           ),
         ),
-        Container(
-          child: GridView.count(
-              primary: false,
-              physics: NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              crossAxisCount: 3,
-              childAspectRatio: 5 / 3,
-              children: bean.productDataList.map((ProductDataBean bean) {
-                return _gridItem(bean);
-              }).toList()),
-        )
+        GridView.count(
+            primary: false,
+            physics: NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
+            crossAxisCount: 3,
+            childAspectRatio: 5 / 3,
+            children: bean.productDataList.map((ProductDataBean bean) {
+              return _gridItem(bean);
+            }).toList()),
       ],
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        body: Column(
-          children: <Widget>[
-            //顶部图片
-            Image.asset(Utils.getImgPath('top_img')),
+    return Scaffold(
+      body: Column(
+        children: <Widget>[
+          //顶部图片
+          Image.asset(Utils.getImgPath('top_img')),
 //            中间服务类型
-            Row(
-              mainAxisSize: MainAxisSize.max,
-              children: <Widget>[
-                Expanded(
-                  child: Container(
-                    color: const Color(0xFFFAEBD7),
-                    padding: EdgeInsets.all(5.0),
-                    child: Column(
-                      children: <Widget>[
-                        Image(
-                          image: AssetImage(Utils.getImgPath("service_basic")),
-                          width: 30,
-                          height: 30,
-                        ),
-                        Text(
-                          "基础服务\n免费",
-                          textAlign: TextAlign.center,
-                        )
-                      ],
-                    ),
+          Row(
+            mainAxisSize: MainAxisSize.max,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Expanded(
+                child: Container(
+                  color: const Color(0xFFFAEBD7),
+                  padding: EdgeInsets.all(5.0),
+                  child: Column(
+                    children: <Widget>[
+                      Image(
+                        image: AssetImage(Utils.getImgPath("service_basic")),
+                        width: 30,
+                        height: 30,
+                      ),
+                      Text(
+                        "基础服务\n免费",
+                        textAlign: TextAlign.center,
+                      )
+                    ],
                   ),
-                  flex: 1,
                 ),
-                Expanded(
-                  child: Container(
-                    color: const Color(0xFFF0F8FF),
-                    padding: EdgeInsets.all(5.0),
-                    child: Column(
-                      children: <Widget>[
-                        Image(
-                          image: AssetImage(Utils.getImgPath("service_glod")),
-                          width: 30,
-                          height: 30,
-                        ),
-                        Text("金牌服务\n尊贵体验")
-                      ],
-                    ),
+                flex: 1,
+              ),
+              Expanded(
+                child: Container(
+                  color: const Color(0xFFF0F8FF),
+                  padding: EdgeInsets.all(5.0),
+                  child: Column(
+                    children: <Widget>[
+                      Image(
+                        image: AssetImage(Utils.getImgPath("service_glod")),
+                        width: 30,
+                        height: 30,
+                      ),
+                      Text("金牌服务\n尊贵体验")
+                    ],
                   ),
-                  flex: 1,
                 ),
-                Expanded(
-                  child: Container(
-                    color: const Color(0xFF7FFFD4),
-                    padding: EdgeInsets.all(5.0),
-                    child: Column(
-                      children: <Widget>[
-                        Image(
-                          width: 30,
-                          height: 30,
-                          image: AssetImage(Utils.getImgPath('service_diman')),
-                        ),
-                        Text("钻石服务\n专人服务")
-                      ],
-                    ),
+                flex: 1,
+              ),
+              Expanded(
+                child: Container(
+                  color: const Color(0xFF7FFFD4),
+                  padding: EdgeInsets.all(5.0),
+                  child: Column(
+                    children: <Widget>[
+                      Image(
+                        width: 30,
+                        height: 30,
+                        image: AssetImage(Utils.getImgPath('service_diman')),
+                      ),
+                      Text("钻石服务\n专人服务")
+                    ],
                   ),
-                  flex: 1,
-                )
-              ],
-            ),
-            //底部的二级列表
-            ListView.builder(
-                shrinkWrap: true,
-                itemCount:
-                    (allData == null || allData.isEmpty) ? 0 : allData.length,
-                itemBuilder: _buildListItemUi),
-          ],
-        ),
+                ),
+                flex: 1,
+              )
+            ],
+          ),
+          //底部的二级列表
+          ListView.builder(
+              shrinkWrap: true,
+              itemCount:
+                  (allData == null || allData.isEmpty) ? 0 : allData.length,
+              itemBuilder: _buildListItemUi),
+        ],
       ),
     );
   }

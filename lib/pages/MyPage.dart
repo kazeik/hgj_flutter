@@ -80,52 +80,48 @@ class MyPageState extends State<MyPage> {
 
   @override
   Widget build(BuildContext context) {
-    return new MaterialApp(
-      theme: new ThemeData(
-          primarySwatch: Colors.blue, backgroundColor: Colors.black12),
-      debugShowCheckedModeBanner: false,
-      home: new Scaffold(
-          appBar: new AppBar(
-            centerTitle: true,
-            title: new Text("我的"),
+    return Scaffold(
+      appBar: new AppBar(
+        centerTitle: true,
+        title: new Text("我的"),
+      ),
+      body: Column(
+        children: <Widget>[
+          _buildUserInfo(),
+          TextIconCell(
+            leftText: lables[0],
+            margin: EdgeInsets.only(top: 5),
+            image: AssetImage(Utils.getImgPath("arr_right")),
+            onClick: () {
+              _onClickEvent(lables[0]);
+            },
           ),
-          body: Column(
-            children: <Widget>[
-              _buildUserInfo(),
-              TextIconCell(
-                leftText: lables[0],
-                margin: EdgeInsets.only(top: 5),
-                image: AssetImage(Utils.getImgPath("arr_right")),
-                onClick: () {
-                  _onClickEvent(lables[0]);
-                },
-              ),
-              TextIconCell(
-                leftText: lables[1],
-                margin: EdgeInsets.only(top: 1),
-                image: AssetImage(Utils.getImgPath("arr_right")),
-                onClick: () {
-                  _onClickEvent(lables[1]);
-                },
-              ),
-              TextIconCell(
-                leftText: lables[2],
-                margin: EdgeInsets.only(top: 5),
-                image: AssetImage(Utils.getImgPath("arr_right")),
-                onClick: () {
-                  _onClickEvent(lables[2]);
-                },
-              ),
-              TextIconCell(
-                leftText: lables[3],
-                margin: EdgeInsets.only(top: 1),
-                image: AssetImage(Utils.getImgPath("arr_right")),
-                onClick: () {
-                  _onClickEvent(lables[3]);
-                },
-              ),
-            ],
-          )),
+          TextIconCell(
+            leftText: lables[1],
+            margin: EdgeInsets.only(top: 1),
+            image: AssetImage(Utils.getImgPath("arr_right")),
+            onClick: () {
+              _onClickEvent(lables[1]);
+            },
+          ),
+          TextIconCell(
+            leftText: lables[2],
+            margin: EdgeInsets.only(top: 5),
+            image: AssetImage(Utils.getImgPath("arr_right")),
+            onClick: () {
+              _onClickEvent(lables[2]);
+            },
+          ),
+          TextIconCell(
+            leftText: lables[3],
+            margin: EdgeInsets.only(top: 1),
+            image: AssetImage(Utils.getImgPath("arr_right")),
+            onClick: () {
+              _onClickEvent(lables[3]);
+            },
+          ),
+        ],
+      ),
     );
   }
 }

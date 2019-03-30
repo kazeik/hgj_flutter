@@ -8,19 +8,12 @@ class WarningPage extends StatefulWidget {
 class WarningPageState extends State<WarningPage> {
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    return new MaterialApp(
-      theme: new ThemeData(
-        primarySwatch: Colors.blue,
+    return new Scaffold(
+      appBar: new AppBar(
+        centerTitle: true,
+        title: new Text("告警"),
       ),
-      debugShowCheckedModeBanner: false,
-      home: new Scaffold(
-        appBar: new AppBar(
-          centerTitle: true,
-          title: new Text("告警"),
-        ),
-        body: new Center(child: new Text("告警")),
-      ),
+      body: new Center(child: new Text("告警")),
     );
   }
 }

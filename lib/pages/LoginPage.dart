@@ -112,7 +112,7 @@ class _LoginPageState extends State<LoginPage> {
             print("cookie = $cookie");
             _saveStringData("cookie", cookie);
             Navigator.pop(context);
-            Navigator.of(context).pushNamed('/home');
+            Navigator.of(context).pushReplacementNamed('/home');
           }
         }
       }
