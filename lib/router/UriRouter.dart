@@ -9,7 +9,8 @@ class UriRouter {
   initUriRouter() {
     uriRouter = {
       "login": "/signin",
-      "producttypesinfo":"/api/productTypeService/producttypesinfo"
+      "producttypesinfo":"/api/productTypeService/producttypesinfo",
+      'userservice':"/api/order/user",
     };
   }
 }

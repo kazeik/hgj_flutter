@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hgj_flutter/pages/AboutPage.dart';
 import 'package:hgj_flutter/pages/HomePage.dart';
 import 'package:hgj_flutter/pages/LoginPage.dart';
+import 'package:hgj_flutter/pages/MyServicePage.dart';
 import 'package:hgj_flutter/pages/SplashPage.dart';
 
 /**
@@ -23,6 +24,7 @@ class NamedRouter {
       '/login': (context) => LoginPage(),
       '/home': (context) => HomePage(),
       '/about': (context) => AboutPage(),
+      '/myservice': (context) => MyServicePage(),
     };
     return routes;
   }

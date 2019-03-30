@@ -61,7 +61,7 @@ class MyPageState extends State<MyPage> {
 
   _onClickEvent(String label) {
     if (label == lables[0]) {
-      print("我的服务被点击");
+      Navigator.pushNamed(context, "/myservice");
     } else if (label == lables[1]) {
       print("操作日志被点击");
     } else if (label == lables[2]) {
