@@ -11,7 +11,9 @@ class UriRouter {
       "login": "/signin",
       "producttypesinfo":"/api/productTypeService/producttypesinfo",
       'userservice':"/api/order/user",
-      'version':'/open/latestversion'
+      'version':'/open/latestversion',
+      'userpass':'/api/user/pwd',
+      'modifyctrlpwd':"/api/user/modifyctrlpwd"
     };
   }
 }

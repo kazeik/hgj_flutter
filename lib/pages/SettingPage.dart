@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:hgj_flutter/beans/ErrorMsgBean.dart';
 import 'package:hgj_flutter/beans/VersionBean.dart';
 import 'package:hgj_flutter/net/HttpNet.dart';
+import 'package:hgj_flutter/pages/ChangePassPage.dart';
 import 'package:hgj_flutter/router/UriRouter.dart';
 import 'package:hgj_flutter/utils/Utils.dart';
 import 'package:hgj_flutter/views/TextIconCell.dart';
@@ -70,8 +71,16 @@ class SettingPageStatus extends State<SettingPage> {
   _onClick(String tag) {
     switch (tag) {
       case "changepass":
+        Navigator.push(context,
+            new MaterialPageRoute(builder: (BuildContext context) {
+          return ChangePassPage(user: true);
+        }));
         break;
       case "controllepass":
+        Navigator.push(context,
+            new MaterialPageRoute(builder: (BuildContext context) {
+          return ChangePassPage(user: false);
+        }));
         break;
       case "update":
         _checkversion();
