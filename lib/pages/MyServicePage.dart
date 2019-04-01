@@ -71,7 +71,7 @@ class MyServiceState extends State<MyServicePage> {
               width: 45,
               height: 45,
               image:
-              NetworkImage("${UriRouter.baseUrl}${allData[index].appicon}"),
+                  NetworkImage("${UriRouter.baseUrl}${allData[index].appicon}"),
             ),
           ),
         ),
@@ -87,14 +87,22 @@ class MyServiceState extends State<MyServicePage> {
         ),
         Expanded(
           flex: 1,
-          child: Text(allData[index].statustext),
-        )
+          child: Text(
+            allData[index].statustext,
+            style: TextStyle(color: Colors.blue),
+          ),
+        ),
       ],
     );
   }
 
   @override
   Widget build(BuildContext context) {
+    if (allData == null || allData.isEmpty) {
+      Future.delayed(Duration.zero, () => Utils.loading(context));
+    } else {
+      Navigator.of(context).pop();
+    }
     return Scaffold(
       appBar: AppBar(
         title: Text("我的服务"),

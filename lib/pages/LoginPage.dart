@@ -81,7 +81,7 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   _login(String email, String pwd) async {
-    _loading();
+    Utils.loading(context,text: "登录中");
     HttpNet.instance.dio.post(UriRouter.uriRouter['login'],
         queryParameters: {"email": email, "pwd": pwd}).then((d) {
       var json = jsonDecode(d.toString());
@@ -208,17 +208,5 @@ class _LoginPageState extends State<LoginPage> {
         ],
       ),
     );
-  }
-
-  Widget _loading() {
-    showDialog<Null>(
-        context: context, //BuildContext对象
-        barrierDismissible: false,
-        builder: (BuildContext context) {
-          return new LoadingDialog(
-            //调用对话框
-            text: '数据加载中...',
-          );
-        });
   }
 }

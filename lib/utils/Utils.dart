@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hgj_flutter/beans/UserInfo.dart';
+import 'package:hgj_flutter/views/LoadingDialog.dart';
 
 class Utils {
   static UserInfo mainInfo;
@@ -18,5 +19,21 @@ class Utils {
         backgroundColor: Colors.grey,
         textColor: Colors.white,
         fontSize: 16.0);
+  }
+
+  static Widget loading(BuildContext context, {String text}) {
+    String _text = '数据加载中...';
+    if (text != null && text != "") {
+      _text = text;
+    }
+    showDialog<Null>(
+        context: context, //BuildContext对象
+        barrierDismissible: false,
+        builder: (BuildContext _context) {
+          return new LoadingDialog(
+            //调用对话框
+            text: _text,
+          );
+        });
   }
 }
