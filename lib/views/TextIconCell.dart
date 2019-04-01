@@ -9,13 +9,24 @@ class TextIconCell extends StatelessWidget {
   ImageProvider image;
 
   TextIconCell(
-      {Key key,
-      @required this.leftText,
-      this.margin,
-      this.onClick,
-      @required this.image})
-      : assert(image != null),
-        super(key: key);
+      {Key key, @required this.leftText, this.margin, this.onClick, this.image})
+      : super(key: key);
+
+  Widget _imageright() {
+    Container container;
+    if (image != null) {
+      container = new Container(
+        child: Image(
+          width: 20,
+          height: 20,
+          image: image,
+        ),
+      );
+    } else {
+      container = new Container();
+    }
+    return container;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,11 +43,7 @@ class TextIconCell extends StatelessWidget {
               leftText,
               style: TextStyle(fontSize: 16),
             ),
-            Image(
-              width: 20,
-              height: 20,
-              image: image,
-            )
+            _imageright()
           ],
         ),
       ),

@@ -65,7 +65,7 @@ class MyPageState extends State<MyPage> {
     } else if (label == lables[1]) {
       print("操作日志被点击");
     } else if (label == lables[2]) {
-      print("设置被点击");
+      Navigator.pushNamed(context, "/setting");
     } else if (label == lables[3]) {
       Navigator.push(
           context, new MaterialPageRoute(builder: (context) => AboutPage()));
