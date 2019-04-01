@@ -1,6 +1,14 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:hgj_flutter/beans/ErrorMsgBean.dart';
+import 'package:hgj_flutter/beans/VersionBean.dart';
+import 'package:hgj_flutter/net/HttpNet.dart';
+import 'package:hgj_flutter/router/UriRouter.dart';
 import 'package:hgj_flutter/utils/Utils.dart';
 import 'package:hgj_flutter/views/TextIconCell.dart';
+import 'package:package_info/package_info.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 /**
  * @author kazeik chen
@@ -16,6 +24,7 @@ class SettingPage extends StatefulWidget {
 
 class SettingPageStatus extends State<SettingPage> {
   bool _value = true;
+  int versionNumber = 0;
 
   _change(bool newState) {
     setState(() {
@@ -23,20 +32,61 @@ class SettingPageStatus extends State<SettingPage> {
     });
   }
 
+  _checkversion() {
+    PackageInfo.fromPlatform().then((PackageInfo packageInfo) {
+      String buildNumber = packageInfo.buildNumber;
+      setState(() {
+        this.versionNumber = int.parse(buildNumber);
+      });
+
+      HttpNet.instance.dio.get(UriRouter.uriRouter['version'],
+          queryParameters: {"type": "0"}).then((value) {
+        var datajson = jsonDecode(value.toString());
+        List<dynamic> errors = datajson['error'];
+        if (errors != null && errors.isNotEmpty) {
+          ErrorMsgBean msgBean = new ErrorMsgBean();
+          msgBean.message = datajson[0]['message'];
+          msgBean.field = datajson[0]['field'];
+          Utils.showToast(msgBean.message);
+          return;
+        }
+        var dataobj = datajson['data'];
+        VersionBean bean = new VersionBean();
+        bean.versionNo = dataobj['versionNo'];
+        bean.version = dataobj['version'];
+        bean.updateMemo = dataobj['updateMemo'];
+        bean.updateTime = dataobj['updateTime'];
+        bean.fileUrl = dataobj['fileUrl'];
+        bean.devType = dataobj['devType'];
+        bean.force_update = dataobj['force_update'];
+
+        if (bean.versionNo > versionNumber) {
+          Utils.showToast("版本有更新");
+        }
+      });
+    });
+  }
+
   _onClick(String tag) {
-    print("tag = $tag");
     switch (tag) {
       case "changepass":
         break;
       case "controllepass":
         break;
-      case "clear":
-        break;
       case "update":
+        _checkversion();
         break;
       case "logout":
+        _exit();
         break;
     }
+  }
+
+  _exit() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    preferences.remove("cookie");
+    Navigator.of(context).pop();
+    Navigator.of(context).pushReplacementNamed("/login");
   }
 
   @override
@@ -76,28 +126,21 @@ class SettingPageStatus extends State<SettingPage> {
           ),
           TextIconCell(
             leftText: "修改登录密码",
-            onClick: (){
+            onClick: () {
               _onClick('changepass');
             },
           ),
           TextIconCell(
             leftText: "修改控制密码",
             margin: EdgeInsets.only(top: 1, bottom: 5),
-            onClick: (){
+            onClick: () {
               _onClick('controllepass');
-            },
-          ),
-          TextIconCell(
-            leftText: "清理缓存",
-            margin: EdgeInsets.only(bottom: 5),
-            onClick: (){
-              _onClick('clear');
             },
           ),
           TextIconCell(
             leftText: "检查更新",
             margin: EdgeInsets.only(bottom: 5),
-            onClick: (){
+            onClick: () {
               _onClick('update');
             },
           ),

@@ -1,13 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:hgj_flutter/utils/Utils.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:package_info/package_info.dart';
 
 _callPhone() {
   String url = "tel:073182188888";
   launch(url);
 }
 
-class AboutPage extends StatelessWidget {
+class AboutPage extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() => AboutPageState();
+}
+
+class AboutPageState extends State<AboutPage> {
+  String version ="";
+
   _onClickEvent(String text) {
     if (text == "系统版本") {
       print("系统版本被响应了");
@@ -22,6 +30,24 @@ class AboutPage extends StatelessWidget {
 //      );
       _callPhone();
     }
+  }
+
+  _getVersion() {
+    PackageInfo.fromPlatform().then((PackageInfo packageInfo) {
+      String _version = packageInfo.version;
+      String buildNumber = packageInfo.buildNumber;
+
+      print("version = $version buildName = $buildNumber");
+      setState(() {
+        version = _version;
+      });
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _getVersion();
   }
 
   Widget _buildItemCell(String text, String rightText, double top) {
@@ -85,7 +111,7 @@ class AboutPage extends StatelessWidget {
             flex: 1,
             child: Column(
               children: <Widget>[
-                _buildItemCell("系统版本", "v1.0", 0),
+                _buildItemCell("系统版本", version, 0),
                 _buildItemCell(
                   "客服电话",
                   "0731-82188888",

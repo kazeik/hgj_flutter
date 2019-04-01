@@ -1,13 +1,10 @@
 import 'dart:convert';
 
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:hgj_flutter/beans/UserInfo.dart';
 import 'package:hgj_flutter/net/HttpNet.dart';
-import 'package:hgj_flutter/pages/HomePage.dart';
 import 'package:hgj_flutter/router/UriRouter.dart';
 import 'package:hgj_flutter/utils/Utils.dart';
-import 'package:hgj_flutter/views/LoadingDialog.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatefulWidget {
@@ -109,7 +106,6 @@ class _LoginPageState extends State<LoginPage> {
         for (var item in session) {
           if (item.startsWith("JFGJ_SID=")) {
             var cookie = item.split(";")[0];
-            print("cookie = $cookie");
             _saveStringData("cookie", cookie);
             Navigator.pop(context);
             Navigator.of(context).pushReplacementNamed('/home');

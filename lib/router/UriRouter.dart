@@ -11,6 +11,7 @@ class UriRouter {
       "login": "/signin",
       "producttypesinfo":"/api/productTypeService/producttypesinfo",
       'userservice':"/api/order/user",
+      'version':'/open/latestversion'
     };
   }
 }
