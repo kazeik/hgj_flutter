@@ -106,6 +106,8 @@ class _LoginPageState extends State<LoginPage> {
         for (var item in session) {
           if (item.startsWith("JFGJ_SID=")) {
             var cookie = item.split(";")[0];
+            Utils.cookie = cookie;
+            print("cookie = $cookie");
             _saveStringData("cookie", cookie);
             Navigator.pop(context);
             Navigator.of(context).pushReplacementNamed('/home');

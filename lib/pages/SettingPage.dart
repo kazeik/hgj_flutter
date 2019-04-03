@@ -91,11 +91,30 @@ class SettingPageStatus extends State<SettingPage> {
     }
   }
 
-  _exit() async {
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    preferences.remove("cookie");
-    Navigator.of(context).pop();
-    Navigator.of(context).pushReplacementNamed("/login");
+  _exit() {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) => AlertDialog(
+              title: Text("提示"),
+              content: Text("确定要退出登录吗？"),
+              actions: <Widget>[
+                FlatButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: Text("取消")),
+                FlatButton(
+                  child: Text('确定'),
+                  onPressed: () async {
+                    SharedPreferences preferences =
+                        await SharedPreferences.getInstance();
+                    preferences.remove("cookie");
+                    Navigator.of(context).pop();
+                    Navigator.of(context).pushReplacementNamed("/login");
+                  },
+                )
+              ],
+            ));
   }
 
   @override

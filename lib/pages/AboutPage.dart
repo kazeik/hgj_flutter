@@ -14,21 +14,33 @@ class AboutPage extends StatefulWidget {
 }
 
 class AboutPageState extends State<AboutPage> {
-  String version ="";
+  String version = "";
 
   _onClickEvent(String text) {
     if (text == "系统版本") {
       print("系统版本被响应了");
     } else if (text == "客服电话") {
-//      MessageDialog(
-//        title: "提示",
-//        message: "是否需要拨打电话0731-82188888",
-//        onCloseEvent: null,
-//        negativeText: "取消",
-//        positiveText: "确定",
-//
-//      );
-      _callPhone();
+      showDialog(
+          context: context,
+          builder: (BuildContext context) => AlertDialog(
+                title: Text("提示"),
+                content: Text("是否需要拨打电话0731-82188888"),
+                actions: <Widget>[
+                  FlatButton(
+                    child: Text("取消"),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                  FlatButton(
+                    child: Text("确定"),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                      _callPhone();
+                    },
+                  )
+                ],
+              ));
     }
   }
 

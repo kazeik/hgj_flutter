@@ -6,6 +6,8 @@ import 'package:hgj_flutter/views/LoadingDialog.dart';
 class Utils {
   static UserInfo mainInfo;
 
+  static String cookie;
+
   static String getImgPath(String name, {String format: 'png'}) {
     return 'assets/images/$name.$format';
   }

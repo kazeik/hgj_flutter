@@ -35,6 +35,8 @@ dependencies:
   url_launcher: ^5.0.2
   #获取版本
   package_info: ^0.4.0+2
+  #下拉菜单
+  dropdown_menu: ^1.1.0
 
 dev_dependencies:
   flutter_test:
@@ -76,6 +78,8 @@ flutter:
     - assets/images/logo.png
     - assets/images/arrow_down_gray.png
     - assets/images/abouttop.png
+    - assets/images/ic_warning_normal.png
+    - assets/images/ic_room.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.

@@ -13,7 +13,8 @@ class UriRouter {
       'userservice':"/api/order/user",
       'version':'/open/latestversion',
       'userpass':'/api/user/pwd',
-      'modifyctrlpwd':"/api/user/modifyctrlpwd"
+      'modifyctrlpwd':"/api/user/modifyctrlpwd",
+      'buildinfo':'/api/v2.0/buildinginfo',
     };
   }
 }
